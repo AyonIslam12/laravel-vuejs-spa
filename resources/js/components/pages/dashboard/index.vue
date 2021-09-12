@@ -6,7 +6,7 @@
                     <div class="card-header">Dashboard Component</div>
 
                     <div class="card-body">
-                        I'm an home Dashboard.
+                      {{ get_message }} {{get_user.name  }}
                     </div>
                 </div>
             </div>
@@ -15,7 +15,14 @@
 </template>
 
 <script>
+import { mapGetters} from "vuex";
     export default {
+        computed: {
+        ...mapGetters([
+            'get_message',
+            'get_user',
+        ]),
+    }
 
 
     }
