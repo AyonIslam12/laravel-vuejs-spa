@@ -10,16 +10,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item ">
-
                      <router-link class="nav-link " :to="{ name: 'home'}">Home  </router-link>
                 </li>
                 <li class="nav-item ">
-
                      <router-link class="nav-link " :to="{ name: 'category-list'}"> Product Categories </router-link>
                 </li>
                 <li class="nav-item ">
-
                      <router-link class="nav-link " :to="{ name: 'product-list'}"> All Products </router-link>
+                </li>
+                <li class="nav-item ">
+                     <router-link class="nav-link " :to="{ name: 'login'}"> Login</router-link>
+                </li>
+                <li class="nav-item ">
+                     <a href="#" class="nav-link" @click.prevent="logout()"> Logout</a>
                 </li>
             </ul>
         </div>
@@ -30,7 +33,19 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+    methods:{
+        logout(){
+            axios.post('/logout').then(res=>{
+                this.$router.push({name: 'login'});
+                 this.$toast.success({
+                    title:'success',
+                    message:'Logout successfully!'
+                })
+            })
+        }
+    }
 
 }
 </script>

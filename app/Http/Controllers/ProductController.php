@@ -114,6 +114,8 @@ class ProductController extends Controller
              $request->image->move(public_path('/storage/products'), $imageName);
              $product->image = '/storage/products/' . $imageName;
              $product->save();
+
+
          }
 
         return response()->json($product, 200);
