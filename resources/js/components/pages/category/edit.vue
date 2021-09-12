@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4>Edit Category</h4>
+                    <h4>Edit Category- {{form.name}}</h4>
                     <router-link :to="{name:'category-list'}" class="btn btn-outline-warning btn-sm text-dark ">Back</router-link>
                     </div>
 

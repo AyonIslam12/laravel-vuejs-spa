@@ -5,14 +5,14 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h4>Edit Product</h4>
+                            <h4>Edit Product- {{productForm.title}}</h4>
                             <router-link :to="{name:'product-list'}" class="btn btn-outline-warning btn-sm text-dark">Back</router-link>
                         </div>
 
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 offset-3">
-                                    <form >
+                                    <form @submit.prevent="updateProduct()" >
                                         <div class="form-group">
                                             <label for="title">Product Title</label>
                                             <input v-model="productForm.title" type="text" name="title" id="title" class="form-control" placeholder="Product Title" :class="{'is-invalid':productForm.errors.has('title')}" />
@@ -23,7 +23,7 @@
                                             <div class="form-group">
                                             <label for="image">Upload Image</label>
 
-                                            <input type="file" name="title" id="title" class="form-control"  :class="{'is-invalid':productForm.errors.has('image')}" />
+                                            <input type="file" name="title" id="title" class="form-control" @change="onImageChange"  :class="{'is-invalid':productForm.errors.has('image')}" />
                                             <div class="text-danger" v-if="productForm.errors.has('image')" v-html="productForm.errors.get('image')" />
                                             </div>
                                            </div>
@@ -75,6 +75,7 @@
                 image: "",
                 price: "",
                 description: "",
+                _method: 'PUT',
             }),
             image:'',
         }),
@@ -90,9 +91,9 @@
 
             });
             },
-           /*  createProduct() {
-                this.productForm
-                    .post("/api/product", {
+            updateProduct() {
+                 let id = this.$route.params.id;
+                this.productForm.post("/api/product/"+id, {
                         transformRequest: [
                             function (data, headers) {
                                 return objectToFormData(data);
@@ -104,13 +105,10 @@
                         },
                     })
                     .then(({ data }) => {
-                        this.productForm.title = "";
-                        this.productForm.price = "";
-                        this.productForm.description = "";
-                        this.productForm.image = "";
+                        this.image = data.image;
                         this.$toast.success({
                             title: "success",
-                            message: "Product created successfully!",
+                            message: "Product updated successfully!",
                         });
                     });
             },
@@ -118,7 +116,7 @@
                 const file = e.target.files[0];
                 // Do some client side validation...
                 this.productForm.image = file;
-            } ,*/
+            } ,
         },
          mounted(){
         this.editProduct();

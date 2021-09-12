@@ -95,7 +95,28 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+
+        $request->validate([
+            'title' => "required|max:255|unique:products,title, $product->id",
+            'price' => 'required',
+            'description' => 'required|string',
+        ]);
+
+        $product->update([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'price' => $request->price,
+            'description' => $request->description,
+
+        ]);
+         if ($request->image) {
+             $imageName = time().'_'. uniqid() .'.'.$request->image->getClientOriginalExtension();
+             $request->image->move(public_path('/storage/products'), $imageName);
+             $product->image = '/storage/products/' . $imageName;
+             $product->save();
+         }
+
+        return response()->json($product, 200);
     }
 
     /**
